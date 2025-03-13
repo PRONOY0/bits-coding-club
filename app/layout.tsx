@@ -4,6 +4,8 @@ import { Montserrat } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/Navbar/page"
 import SessionProviderWrapper from "@/components/SessionProviderWrapper/SessionProviderWrapper"
+import { Toaster } from "sonner"
+import { Providers } from "./providers";
 
 
 const montserrat = Montserrat({
@@ -27,8 +29,11 @@ export default function RootLayout({
     <html lang="en">
       <SessionProviderWrapper>
         <body className={montserrat.className}>
-          <Navbar />
-          <main>{children}</main>
+          <Providers>
+            <Navbar />
+            <main>{children}</main>
+            <Toaster />
+          </Providers>
         </body>
       </SessionProviderWrapper>
     </html>

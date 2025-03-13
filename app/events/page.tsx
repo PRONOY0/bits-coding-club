@@ -1,114 +1,72 @@
 "use client";
 import Link from "next/link"
-import { Calendar } from "lucide-react"
+import { Calendar, Clock } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { EventCard } from "../../components/index"
 import Footer from "@/components/Footer/Footer"
+import { useAppContext } from "@/context/page";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+type EventType = {
+  id?: string;
+  title?: string;
+  category?: string;
+  content?: string;
+  image?: string;
+  date?: Date;
+  time?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
 
 export default function EventsPage() {
   // This would typically come from a database or API
-  const upcomingEvents = [
-    {
-      title: "Competitive Programming Contest",
-      date: "June 5, 2023",
-      time: "2:00 PM - 6:00 PM",
-      location: "Computer Science Lab",
-      type: "event" as const,
-      slug: "competitive-programming-contest",
-    },
-    {
-      title: "Introduction to Machine Learning",
-      date: "June 10, 2023",
-      time: "10:00 AM - 1:00 PM",
-      location: "Room 302, CS Building",
-      type: "workshop" as const,
-      slug: "intro-to-ml",
-    },
-    {
-      title: "Future of AI in Software Development",
-      date: "June 12, 2023",
-      time: "3:00 PM - 4:30 PM",
-      location: "Lecture Hall 1",
-      type: "speaker" as const,
-      slug: "ai-in-software-dev",
-    },
-    {
-      title: "Tech Fest 2023",
-      date: "June 15-17, 2023",
-      time: "All day",
-      location: "Main Auditorium",
-      type: "event" as const,
-      slug: "tech-fest-2023",
-    },
-    {
-      title: "Web Development with React",
-      date: "June 20, 2023",
-      time: "2:00 PM - 5:00 PM",
-      location: "Computer Lab 2",
-      type: "workshop" as const,
-      slug: "react-workshop",
-    },
-    {
-      title: "Cybersecurity Best Practices",
-      date: "June 25, 2023",
-      time: "5:00 PM - 6:30 PM",
-      location: "Main Auditorium",
-      type: "speaker" as const,
-      slug: "cybersecurity-talk",
-    },
-  ]
 
-  const pastEvents = [
-    {
-      title: "Python Programming Basics",
-      date: "May 15, 2023",
-      time: "2:00 PM - 5:00 PM",
-      location: "Computer Lab 1",
-      type: "workshop" as const,
-      slug: "python-basics",
-    },
-    {
-      title: "Spring Hackathon 2023",
-      date: "May 10-11, 2023",
-      time: "9:00 AM - 9:00 PM",
-      location: "Innovation Center",
-      type: "event" as const,
-      slug: "spring-hackathon",
-    },
-    {
-      title: "Careers in Data Science",
-      date: "May 5, 2023",
-      time: "4:00 PM - 5:30 PM",
-      location: "Lecture Hall 2",
-      type: "speaker" as const,
-      slug: "data-science-careers",
-    },
-  ]
+  const { events, loading } = useAppContext();
 
-  const parseDate = (dateString: string) => {
-    // Extracts all valid dates (handles both "June 15, 2023" and "June 15-17, 2023")
-    const matches = dateString.match(/\b\w+\s\d{1,2}\b/g);
-    const yearMatch = dateString.match(/\d{4}/); // Extracts the year separately
-  
-    if (!matches || !yearMatch) return 0; // Return 0 if no valid date found
-  
-    const year = yearMatch[0]; // Extract the year (e.g., "2023")
-  
-    // If it's a range, take the last date (e.g., "June 15-17, 2023" → "June 17, 2023")
-    const lastDate = matches[matches.length - 1].split(" "); // Get last part
-    const month = matches[0].split(" ")[0]; // Always take the first month
-    
-    const fullDateString = `${month} ${lastDate[lastDate.length - 1]}, ${year}`;
-    return new Date(fullDateString).getTime();
+  console.log("Event Category:", events);
+
+  const filterEventsByDate = (events: EventType[]) => {
+    const currentDate = new Date(); // Current date and time
+
+    // Convert event date string to Date object and compare it
+    const upcomingEvents = events.filter((event) => {
+      const eventDate = new Date(event.date!); // Convert event date to Date object
+      return eventDate > currentDate; // Filter for events that are after the current date
+    });
+
+    const pastEvents = events.filter((event) => {
+      const eventDate = new Date(event.date!);
+      return eventDate <= currentDate; // Filter for events that are on or before the current date
+    });
+
+    return { upcomingEvents, pastEvents };
   };
 
-  const sortedUpcomingEvents = [...upcomingEvents].sort(
-    (a, b) => parseDate(b.date) - parseDate(a.date)
-  );
+  const formatDate = (dateString: string | Date) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).format(date);
+  };
 
-  const sortedPastEvents = [...pastEvents].sort(
-    (a, b) => parseDate(b.date) - parseDate(a.date)
-  );
+  const { upcomingEvents, pastEvents } = filterEventsByDate(events);
+
+  console.log(upcomingEvents);
+  console.log(pastEvents);
+
+  const getCategoryColorClass = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'guest speaker': return 'bg-[#CF2027]';
+      case 'opportunity': return 'bg-[#B78A2D]';
+      case 'announcement': return 'bg-[#2B2B88]';
+      case 'event': return 'bg-[#5CCAE8]';
+      default: return 'bg-[#5CCAE8]';
+    }
+  };
 
   return (
     <div className="w-full">
@@ -137,32 +95,81 @@ export default function EventsPage() {
 
           <TabsContent value="upcoming" className="space-y-8 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 w-full">
-              {sortedUpcomingEvents.map((event, index) => (
-                <EventCard
-                  key={index}
-                  title={event.title}
-                  date={event.date}
-                  time={event.time}
-                  location={event.location}
-                  type={event.type}
-                  slug={event.slug}
-                />
-              ))}
+              {upcomingEvents.map((event) => {
+                return (
+                  <Card key={event.id} className="cursor-pointer hover:scale-110 transition-transform duration-500 gap-2">
+                    <CardHeader className="pb-2">
+                      <div className="flex justify-between items-start">
+                        <Badge className={`rounded-3xl ${getCategoryColorClass(event.category!)}`}>{event.category}</Badge>
+                      </div>
+                      <CardTitle className="mt-2 lg:text-xl">{event.title}</CardTitle>
+                    </CardHeader>
+
+                    <CardContent>
+                      <span className="text-sm text-muted-foreground flex gap-2 items-center"> <Calendar size={18} className="hidden md:block" /> {formatDate(event.date!)}</span>
+                    </CardContent>
+
+                    <CardContent>
+                      <span className="text-sm text-muted-foreground flex gap-2 items-center"> <Clock size={18} className="hidden md:block" /> {(event.time!)}</span>
+                    </CardContent>
+
+                    <CardContent className="mt-2">
+                      <p>
+                        {`
+                            ${event?.content?.slice(0, 150)}...
+                          `}
+                      </p>
+                    </CardContent>
+
+                    <CardFooter>
+                      <Link
+                        href={`/events/${event.id}`}
+                        className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
+                      >
+                        Read more →
+                      </Link>
+                    </CardFooter>
+                  </Card>
+                )
+              })}
             </div>
           </TabsContent>
 
           <TabsContent value="past" className="space-y-6 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 w-full">
-              {sortedPastEvents.map((event, index) => (
-                <EventCard
-                  key={index}
-                  title={event.title}
-                  date={event.date}
-                  time={event.time}
-                  location={event.location}
-                  type={event.type}
-                  slug={event.slug}
-                />
+              {pastEvents.map((event) => (
+                <Card key={event.id} className="cursor-pointer hover:scale-110 transition-transform duration-500 gap-2">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <Badge className={`rounded-3xl ${getCategoryColorClass(event.category!)}`}>{event.category}</Badge>
+                    </div>
+                    <CardTitle className="mt-2 lg:text-xl">{event.title}</CardTitle>
+                  </CardHeader>
+
+                  <CardContent>
+                    <span className="text-sm text-muted-foreground flex gap-2 items-center"> <Calendar size={18} className="hidden md:block" /> {formatDate(event.date!)}</span>
+                  </CardContent>
+
+                  <CardContent>
+                    <span className="text-sm text-muted-foreground flex gap-2 items-center"> <Clock size={18} className="hidden md:block" /> {(event.time!)}</span>
+                  </CardContent>
+
+                  <CardContent className="mt-2">
+                    <p>
+                      {`
+                        ${event?.content?.slice(0, 150)}...
+                      `}
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Link
+                      href={`/events/${event.id}`}
+                      className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
+                    >
+                      Read more →
+                    </Link>
+                  </CardFooter>
+                </Card>
               ))}
             </div>
           </TabsContent>

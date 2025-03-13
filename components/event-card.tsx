@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { CalendarDays, Clock, MapPin } from "lucide-react"
+import { CalendarDays, Clock } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
@@ -12,7 +12,7 @@ interface EventCardProps {
   slug: string
 }
 
-export default function EventCard({ title, date, time, location, type, slug }: EventCardProps) {
+export default function EventCard({ title, date, time, type, slug }: EventCardProps) {
   const getBadgeColor = () => {
     switch (type) {
       case "event":
@@ -56,10 +56,6 @@ export default function EventCard({ title, date, time, location, type, slug }: E
           <div className="flex items-center gap-2">
             <Clock size={16} className="text-muted-foreground" />
             <span>{time}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin size={16} className="text-muted-foreground" />
-            <span>{location}</span>
           </div>
         </div>
       </CardContent>

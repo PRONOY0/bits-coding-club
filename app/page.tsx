@@ -1,16 +1,44 @@
 "use client";
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, Code, Users, Award, ChevronRight } from "lucide-react"
+import { Calendar, Code, Users, ChevronRight, Newspaper, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import GallerySlider from "@/components/gallery-slider"
-import UpcomingEvents from "@/components/upcoming-events"
 import Footer from "@/components/Footer/Footer"
+import { useAppContext } from "@/context/page";
+import Error403 from "@/components/UnAuthenticated/page";
+import Loader from "@/components/Loader/page";
+import { useState } from "react";
 
 export default function Home() {
+  const { updates, projects, events, loading, error } = useAppContext();
+  const [type, setType] = useState("event");
+
+  if (loading) return <div className="w-full lg:h-[90vh] flex justify-center items-center"><Loader /></div>;
+  if (error) return <div><Error403 /></div>;
+
+  const getCategoryColorClass = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'guest speaker': return 'bg-[#CF2027]';
+      case 'opportunity': return 'bg-[#B78A2D]';
+      case 'announcement': return 'bg-[#2B2B88]';
+      case 'event': return 'bg-[#5CCAE8]';
+      default: return 'bg-[#5CCAE8]';
+    }
+  };
+
+  const formatDate = (dateString: string | Date) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).format(date);
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen w-full">
 
@@ -49,9 +77,9 @@ export default function Home() {
               <Users size={20} />
               <span className="lg:text-lg">Join Us</span>
             </Link>
-            <Link href="/achievements" className="flex items-center gap-2 hover:text-[#FFE275] transition-colors">
-              <Award size={20} />
-              <span className="lg:text-lg">Achievements</span>
+            <Link href="/updates" className="flex items-center gap-2 hover:text-[#FFE275] transition-colors">
+              <Newspaper size={20} />
+              <span className="lg:text-lg">Updates</span>
             </Link>
           </div>
         </div>
@@ -68,74 +96,36 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <Card className="cursor-pointer hover:scale-110 transition-transform duration-500">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <Badge className="bg-[#1DA8CE] rounded-3xl">New</Badge>
-                  <span className="text-sm text-muted-foreground">May 15, 2023</span>
-                </div>
-                <CardTitle className="mt-2 lg:text-xl">Hackathon Winners Announced</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  Congratulations to Team CodeCrafters for winning the Spring Hackathon with their innovative project on
-                  AI-assisted coding.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/updates/hackathon-winners"
-                  className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
-                >
-                  Read more →
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="cursor-pointer hover:scale-110 transition-transform duration-500">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <Badge className="bg-[#B78A2D] rounded-3xl hover:bg-[#B78A2D]/90">Workshop</Badge>
-                  <span className="text-sm text-muted-foreground">May 10, 2023</span>
-                </div>
-                <CardTitle className="mt-2 lg:text-xl">Web Development Bootcamp</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-start">
-                  Join our intensive 3-day bootcamp to learn modern web development with React and Next.js. Perfect for
-                  beginners!
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/events/web-dev-bootcamp"
-                  className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
-                >
-                  Register now →
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="cursor-pointer hover:scale-110 transition-transform duration-500">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <Badge className="bg-[#CF2027] rounded-3xl hover:bg-[#CF2027]/90">Guest Talk</Badge>
-                  <span className="text-sm text-muted-foreground">May 5, 2023</span>
-                </div>
-                <CardTitle className="mt-2 lg:text-xl">AI in Software Engineering</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  Dr. Priya Sharma from Google will be discussing the impact of AI on modern software engineering
-                  practices.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link href="/events/ai-talk" className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300">
-                  Learn more →
-                </Link>
-              </CardFooter>
-            </Card>
+            {
+              updates.slice(0, 3).map((update) => {
+                return (
+                  <Card key={update.id} className="cursor-pointer hover:scale-110 transition-transform duration-500">
+                    <CardHeader className="pb-2">
+                      <div className="flex justify-between items-start">
+                        <Badge className={`rounded-3xl ${getCategoryColorClass(update.category!)}`}>{update.category}</Badge>
+                        <span className="text-sm text-muted-foreground">{formatDate(update.date!)}</span>
+                      </div>
+                      <CardTitle className="mt-2 lg:text-xl">{update.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p>
+                        {
+                          update.shortDescription
+                        }
+                      </p>
+                    </CardContent>
+                    <CardFooter>
+                      <Link
+                        href={`/updates/${update.id}`}
+                        className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
+                      >
+                        Read more →
+                      </Link>
+                    </CardFooter>
+                  </Card>
+                )
+              })
+            }
           </div>
         </div>
       </section>
@@ -155,23 +145,55 @@ export default function Home() {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold text-[#2B2B88] lg:text-4xl">Upcoming Activities</h2>
               <TabsList>
-                <TabsTrigger value="events" className="cursor-pointer">Events</TabsTrigger>
-                <TabsTrigger value="workshops" className="cursor-pointer">Workshops</TabsTrigger>
-                <TabsTrigger value="speakers" className="cursor-pointer">Guest Speakers</TabsTrigger>
+                <TabsTrigger value="events" className="cursor-pointer" onClick={() => setType("event")}>Events</TabsTrigger>
+                <TabsTrigger value="workshops" className="cursor-pointer" onClick={() => setType("workshop")}>Workshops</TabsTrigger>
+                <TabsTrigger value="speakers" className="cursor-pointer" onClick={() => setType("guest speaker")}>Guest Speakers</TabsTrigger>
               </TabsList>
             </div>
 
-            <TabsContent value="events" className="mt-0 max-w-full">
-              <UpcomingEvents type="event" />
-            </TabsContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {
+                events
+                  .filter(event => event.category?.toLowerCase() === type)
+                  .slice(0, 3)
+                  .map((event) => {
+                    return (
+                      <Card key={event.id} className="cursor-pointer hover:scale-110 transition-transform duration-500 gap-2">
+                        <CardHeader className="pb-2">
+                          <div className="flex justify-between items-start">
+                            <Badge className={`rounded-3xl ${getCategoryColorClass(event.category!)}`}>{event.category}</Badge>
+                          </div>
+                          <CardTitle className="mt-2 lg:text-xl">{event.title}</CardTitle>
+                        </CardHeader>
 
-            <TabsContent value="workshops" className="mt-0 max-w-full">
-              <UpcomingEvents type="workshop" />
-            </TabsContent>
+                        <CardContent>
+                          <span className="text-sm text-muted-foreground flex gap-2 items-center"> <Calendar size={18} className="hidden md:block" /> {formatDate(event.date!)}</span>
+                        </CardContent>
 
-            <TabsContent value="speakers" className="mt-0">
-              <UpcomingEvents type="speaker" />
-            </TabsContent>
+                        <CardContent>
+                          <span className="text-sm text-muted-foreground flex gap-2 items-center"> <Clock size={18} className="hidden md:block" /> {(event.time!)}</span>
+                        </CardContent>
+
+                        <CardContent className="mt-2">
+                          <p>
+                            {`
+                            ${event?.content?.slice(0, 150)}...
+                          `}
+                          </p>
+                        </CardContent>
+                        <CardFooter>
+                          <Link
+                            href={`/events/${event.id}`}
+                            className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
+                          >
+                            Read more →
+                          </Link>
+                        </CardFooter>
+                      </Card>
+                    )
+                  })
+              }
+            </div>
           </Tabs>
         </div>
       </section>
@@ -201,93 +223,34 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="overflow-hidden hover:bg-gray-50 transition-all cursor-pointer hover:scale-105 duration-500">
+            {projects.slice(0, 3).map((project) => (
+              <Card key={project.id} className="overflow-hidden hover:bg-gray-50 transition-all cursor-pointer hover:scale-105 duration-500">
                 <div className="relative w-auto h-80">
                   <Image
-                    src={`/projects.png`}
-                    alt={`Project ${i}`}
+                    src={project.image!}
+                    alt={`Project ${project.image}`}
                     fill
                     className="object-cover p-3 rounded-2xl"
                   />
                 </div>
                 <CardHeader>
-                  <CardTitle>Smart Campus Navigator</CardTitle>
-                  <CardDescription>By Team CodeWizards</CardDescription>
+                  <CardTitle>{project.title}</CardTitle>
+                  <CardDescription>By {project.teamName}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p>
-                    An AI-powered campus navigation app that helps students find the shortest routes between buildings.
+                    {
+                      project.description?.slice(0, 150)
+                    }
                   </p>
                 </CardContent>
                 <CardFooter>
-                  <Link href={`/projects/${i}`} className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300">
+                  <Link href={`/projects/${project.id}`} className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300">
                     View project →
                   </Link>
                 </CardFooter>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Faculty & Student Highlights */}
-      <section className="py-16 bg-gray-50 w-full flex justify-center">
-        <div className="container px-4">
-          <h2 className="text-3xl font-bold text-[#2B2B88] mb-8 lg:text-5xl">Faculty & Student Highlights</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
-            <Card>
-              <CardHeader>
-                <CardTitle>Faculty Spotlight</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="relative h-32 w-32 rounded-full overflow-hidden flex-shrink-0 mx-auto md:mx-0">
-                    <Image
-                      src="/person.jpeg"
-                      alt="Professor"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">Dr. Rajesh Kumar</h3>
-                    <p className="text-sm text-muted-foreground mb-2">Professor, Computer Science</p>
-                    <p>
-                      Dr. Kumar&apos;s research on distributed systems has been published in top-tier conferences. He
-                      recently received the Outstanding Faculty Award.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Student Achiever</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="relative h-32 w-32 rounded-full overflow-hidden flex-shrink-0 mx-auto md:mx-0">
-                    <Image
-                      src="/female.jpg"
-                      alt="Student"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">Ananya Patel</h3>
-                    <p className="text-sm text-muted-foreground mb-2">3rd Year, BSc Computer Science</p>
-                    <p>
-                      Ananya won the National Coding Championship and secured an internship at Microsoft. She leads the
-                      club&apos;s competitive programming team.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
