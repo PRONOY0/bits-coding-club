@@ -133,7 +133,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarContent>
+      <SidebarContent className="mt-16">
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarRail />

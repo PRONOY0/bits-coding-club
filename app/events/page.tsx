@@ -54,9 +54,6 @@ export default function EventsPage() {
 
   const { upcomingEvents, pastEvents } = filterEventsByDate(events);
 
-  console.log(upcomingEvents);
-  console.log(pastEvents);
-
   const getCategoryColorClass = (category: string) => {
     switch (category.toLowerCase()) {
       case 'guest speaker': return 'bg-[#CF2027]';
@@ -69,17 +66,17 @@ export default function EventsPage() {
 
   return (
     <div className="w-full">
-      <div className="w-full px-64 py-24 flex flex-col">
+      <div className="w-full lg:px-8 xl:px-8 2xl:px-64 py-24 flex flex-col px-3 md:px-8">
         <div className=" w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold lg:text-5xl text-[#2B2B88]">Events & Activities</h1>
-            <p className="text-muted-foreground mt-2">
+            <p className="text-muted-foreground mt-2 md:w-4/5">
               Discover workshops, competitions, and guest talks organized by the BITS Pilani Coding Club
             </p>
           </div>
           <Link
             href="/events/calendar"
-            className="flex items-center gap-2 bg-[#2B2B88] text-white px-4 py-2 rounded-md hover:bg-[#2B2B88]/90 transition-colors"
+            className="flex items-center gap-2 bg-[#2B2B88] text-white px-4 py-2 rounded-md hover:bg-[#2B2B88]/90 transition-colors md:gap-5"
           >
             <Calendar size={18} />
             <span>View Calendar</span>
@@ -93,7 +90,7 @@ export default function EventsPage() {
           </TabsList>
 
           <TabsContent value="upcoming" className="space-y-8 w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
               {upcomingEvents.map((event) => {
                 return (
                   <Card key={event.id} className="cursor-pointer hover:scale-110 transition-transform duration-500 gap-2">

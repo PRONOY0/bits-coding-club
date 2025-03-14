@@ -11,11 +11,11 @@ export default function RecruitmentPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative w-full h-[50vh] bg-gradient-to-r from-[#2B2B88] to-[#5CCAE8] flex justify-center">
+      <section className="relative w-full h-[50vh] bg-gradient-to-r from-[#2B2B88] to-[#5CCAE8] flex justify-center overflow-x-hidden">
         <div className="absolute inset-0 bg-black/30" />
         <div className="container relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 lg:text-7xl">Join Our Coding Club</h1>
-          <p className="text-xl max-w-2/4 mb-8 lg:text-2xl">
+          <p className="text-xl max-w-full md:max-w-2/4 mb-8 lg:text-2xl">
             Be part of a vibrant community of coders, innovators, and problem-solvers at BITS Pilani
           </p>
           <Button size="lg" className="bg-[#FFE275] hover:bg-[#FFC900]/90 text-[#2B2B88] font-bold transition-colors duration-300 cursor-pointer">
@@ -29,7 +29,7 @@ export default function RecruitmentPage() {
         <div className="container px-4">
           <h2 className="text-3xl font-bold text-[#2B2B88] mb-12 text-center lg:text-5xl">Why Join Us?</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="hover:bg-[#EDFAFE]/50 hover:scale-105 hover:-translate-y-4 transition-all duration-500 cursor-default">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-[#5CCAE8]/20 flex items-center justify-center mb-4">
@@ -116,11 +116,11 @@ export default function RecruitmentPage() {
 
       {/* Roles & Responsibilities */}
       <section className="mt-32 w-full">
-        <div className="w-full px-64 py-24 flex flex-col">
+        <div className="w-full px-5 md:px-8 lg:px-10 xl:px-10 2xl:px-64 py-24 flex flex-col">
           <h2 className="text-3xl font-bold text-[#2B2B88] mb-12 text-start lg:text-6xl">Roles & Teams</h2>
 
           <Tabs defaultValue="technical" className="w-full">
-            <TabsList className="grid grid-cols-3 mb-8 w-fit">
+            <TabsList className="grid grid-cols-2 md:grid-cols-3 mb-8 w-fit">
               <TabsTrigger value="technical" className="cursor-pointer">Technical</TabsTrigger>
               <TabsTrigger value="events" className="cursor-pointer">Events</TabsTrigger>
               <TabsTrigger value="content" className="cursor-pointer">Content & Design</TabsTrigger>
@@ -305,15 +305,14 @@ export default function RecruitmentPage() {
 
       {/* Testimonials */}
       <section className=" w-full py-16 bg-gray-50">
-        <div className="w-full px-64 py-24 flex flex-col">
+        <div className="w-full px-4 md:px-8 lg:px-10 xl:px-10 2xl:px-64 py-24 flex flex-col">
           <h2 className="text-3xl font-bold text-[#2B2B88] mb-12 text-start lg:text-6xl">What Our Members Say</h2>
           <AnimatedTestimonialsDemo />
         </div>
       </section>
 
-
       {/* Apply Now CTA */}
-      <section className="py-16 bg-[#2B2B88] text-white w-full justify-center">
+      <section className="py-16 px-5 bg-[#2B2B88] text-white w-full justify-center md:p-5 lg:p-8">
         <div className="w-full text-center">
           <h2 className="text-3xl font-bold mb-4 lg:text-5xl">Ready to Join Us?</h2>
           <p className="max-w-2xl mx-auto mb-8 text-lg lg:text-xl">

@@ -193,7 +193,7 @@ const EditParticular = () => {
         <Error403 />
     </div>;
     return (
-        <div>
+        <div className='p-5'>
             <Card className="w-full max-w-2xl mx-auto">
                 <ToastContainer />
                 <CardHeader>
@@ -357,7 +357,7 @@ const EditParticular = () => {
                                                         <img
                                                             src={imagePreview}
                                                             alt="Preview"
-                                                            className="w-auto max-w-md h-auto rounded-md object-cover"
+                                                            className="w-3/4 md:w-auto max-w-md h-auto rounded-md object-cover"
                                                         />
                                                     </div>
                                                 )}

@@ -25,8 +25,8 @@ const Footer = () => {
     }
     return (
         <footer className="bg-[#0F0F2F] text-white w-full">
-            <div className="container mx-auto px-4 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="container mx-auto px-4 py-12 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full">
                     <div className="space-y-4">
                         <h3 className="text-4xl font-bold">BITS Coding Club</h3>
                         <p className="text-lg">
@@ -102,17 +102,20 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <div>
+                    <div className='w-full relative md:right-3'>
                         <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
                         <address className="not-italic text-sm space-y-2">
                             <p className="text-[#fff]">BITS Pilani</p>
                             <p className="text-[#fff]">Pilani Campus</p>
                             <p className="text-[#fff]">Rajasthan, India</p>
+
                             <TooltipProvider>
                                 <Tooltip>
-                                    <TooltipTrigger className="flex items-center cursor-pointer" onClick={()=>{gmailCopy()}}>
-                                        <FiMail size={16} className="mr-2" />
-                                        codingclub@online.bits-pilani.ac.in
+                                    <TooltipTrigger className="flex items-start cursor-pointer" onClick={() => { gmailCopy() }}>
+                                        <FiMail size={16} className="mr-2 mt-1" />
+                                        <p className="text-start break-words overflow-wrap anywhere">
+                                            codingclub@online.bits-pilani.ac.in
+                                        </p>
                                     </TooltipTrigger>
 
                                     <TooltipContent>

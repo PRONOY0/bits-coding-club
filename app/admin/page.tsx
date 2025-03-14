@@ -210,7 +210,8 @@ const Admin = () => {
     return (
         <div className='w-full h-full flex justify-center items-center'>
             <SidebarProvider>
-                <AppSidebar className='mt-20' />
+                <AppSidebar className='md:mt-20'/>
+
                 <SidebarInset>
                     <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
                         <div className="flex items-center gap-2 px-4">
@@ -235,8 +236,8 @@ const Admin = () => {
                         <div className="grid auto-rows-min gap-4 md:grid-cols-3 h-auto">
                             <div className="aspect-video rounded-xl bg-[#1f1f1f]/10 h-full">
                                 <div className='flex w-full gap-5 p-8 items-center'>
-                                    <h1 className='text-3xl font-medium'>Total Projects : </h1>
-                                    <span className='text-4xl font-medium text-pink-400'>
+                                    <h1 className='md:text-3xl font-medium text-2xl'>Total Projects : </h1>
+                                    <span className='md:text-4xl text-3xl font-medium text-pink-400'>
                                         {
                                             projects.length
                                         }
@@ -246,8 +247,8 @@ const Admin = () => {
 
                             <div className="aspect-video rounded-xl bg-[#1f1f1f]/10 h-full">
                                 <div className='flex w-full gap-5 p-8 items-center'>
-                                    <h1 className='text-3xl font-medium'>Total Updates : </h1>
-                                    <span className='text-4xl font-medium text-red-400'>
+                                    <h1 className='md:text-3xl font-medium text-2xl'>Total Updates : </h1>
+                                    <span className='md:text-4xl text-3xl font-medium text-red-400'>
                                         {
                                             updates.length
                                         }
@@ -257,8 +258,8 @@ const Admin = () => {
 
                             <div className="aspect-video rounded-xl bg-[#1f1f1f]/10 h-full">
                                 <div className='flex w-full gap-5 p-8 items-center'>
-                                    <h1 className='text-3xl font-medium'>Total Testimonials : </h1>
-                                    <span className='text-4xl font-medium text-purple-400'>
+                                    <h1 className='md:text-3xl font-medium text-2xl'>Total Testimonials : </h1>
+                                    <span className='md:text-4xl text-3xl font-medium text-purple-400'>
                                         {
                                             testimonials.length
                                         }
@@ -268,8 +269,8 @@ const Admin = () => {
 
                             <div className="aspect-video rounded-xl bg-[#1f1f1f]/10 h-full">
                                 <div className='flex w-full gap-5 p-8 items-center'>
-                                    <h1 className='text-3xl font-medium'>Total Events : </h1>
-                                    <span className='text-4xl font-medium text-blue-400'>
+                                    <h1 className='md:text-3xl font-medium text-2xl'>Total Events : </h1>
+                                    <span className='md:text-4xl text-3xl font-medium text-blue-400'>
                                         {
                                             events.length
                                         }
@@ -279,8 +280,8 @@ const Admin = () => {
 
                             <div className="aspect-video rounded-xl bg-[#1f1f1f]/10 h-full">
                                 <div className='flex w-full gap-5 p-8 items-center'>
-                                    <h1 className='text-3xl font-medium'>Total Images in Gallery: </h1>
-                                    <span className='text-4xl font-medium text-green-600'>
+                                    <h1 className='md:text-3xl font-medium text-2xl'>Total Images in Gallery: </h1>
+                                    <span className='md:text-4xl text-3xl font-medium text-green-600'>
                                         {
                                             gallery.length
                                         }

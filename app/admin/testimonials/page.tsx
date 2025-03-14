@@ -118,119 +118,121 @@ const TestimonialCardForm = () => {
   };
 
   if (status === "loading") return <div className='w-full h-screen flex justify-center items-center'><Loader /></div>;
-    if (!session || session.user.role !== "admin") return <div className='w-full h-full flex justify-center items-center'>
-        <Error403 />
-    </div>;
+  if (!session || session.user.role !== "admin") return <div className='w-full h-full flex justify-center items-center'>
+    <Error403 />
+  </div>;
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <ToastContainer />
-      <CardHeader>
-        <CardTitle>Create New Testimonial</CardTitle>
-        <CardDescription>Fill in the details to create a new testimonial</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Title Field */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <div className='p-5'>
+      <Card className="w-full max-w-2xl mx-auto">
+        <ToastContainer />
+        <CardHeader>
+          <CardTitle>Create New Testimonial</CardTitle>
+          <CardDescription>Fill in the details to create a new testimonial</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {/* Title Field */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Category Field */}
-            <FormField
-              control={form.control}
-              name="batch"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Batch</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your batch" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Eg:- Batch of 2023
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              {/* Category Field */}
+              <FormField
+                control={form.control}
+                name="batch"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Batch</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your batch" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Eg:- Batch of 2023
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Content Field */}
-            <FormField
-              control={form.control}
-              name="feedback"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Feedback</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Write your feedback here..."
-                      className="min-h-32"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    The main content of your feedback
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Image Upload Field */}
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field: { value, onChange, ...fieldProps } }) => (
-                <FormItem>
-                  <FormLabel>Student Image</FormLabel>
-                  <FormControl>
-                    <div className="space-y-4">
-                      <Input
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          onChange(e.target.files);
-                          handleImageChange(e);
-                        }}
-                        {...fieldProps}
+              {/* Content Field */}
+              <FormField
+                control={form.control}
+                name="feedback"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Feedback</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write your feedback here..."
+                        className="min-h-32"
+                        {...field}
                       />
-                      {imagePreview && (
-                        <div className="mt-2">
-                          <p className="text-sm mb-2">Preview:</p>
-                          <img
-                            src={imagePreview}
-                            alt="Preview"
-                            className="w-auto max-w-md h-auto rounded-md object-cover"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    Upload Student Image
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    </FormControl>
+                    <FormDescription>
+                      The main content of your feedback
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Submit Button */}
-            <Button type="submit" className="w-full">Submit</Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+              {/* Image Upload Field */}
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field: { value, onChange, ...fieldProps } }) => (
+                  <FormItem>
+                    <FormLabel>Student Image</FormLabel>
+                    <FormControl>
+                      <div className="space-y-4">
+                        <Input
+                          id="image"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            onChange(e.target.files);
+                            handleImageChange(e);
+                          }}
+                          {...fieldProps}
+                        />
+                        {imagePreview && (
+                          <div className="mt-2">
+                            <p className="text-sm mb-2">Preview:</p>
+                            <img
+                              src={imagePreview}
+                              alt="Preview"
+                              className="w-3/4 md:w-auto max-w-md h-auto rounded-md object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </FormControl>
+                    <FormDescription>
+                      Upload Student Image
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Submit Button */}
+              <Button type="submit" className="w-full">Submit</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 

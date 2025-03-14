@@ -148,217 +148,219 @@ const ProjectPostForm = () => {
     <Error403 />
   </div>;
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <ToastContainer />
-      <CardHeader>
-        <CardTitle>Create New Project</CardTitle>
-        <CardDescription>Fill in the details to create a new project</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Title Field */}
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter project title" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    The title of your project
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* TeamName Field */}
-            <FormField
-              control={form.control}
-              name="teamName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Team Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your team name" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Your Project Team Name
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Type Field */}
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Type</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <div className='p-5'>
+      <Card className="w-full max-w-2xl mx-auto">
+        <ToastContainer />
+        <CardHeader>
+          <CardTitle>Create New Project</CardTitle>
+          <CardDescription>Fill in the details to create a new project</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {/* Title Field */}
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a type" />
-                      </SelectTrigger>
+                      <Input placeholder="Enter project title" {...field} />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="All Projects">All Projects</SelectItem>
-                      <SelectItem value="Web">Web</SelectItem>
-                      <SelectItem value="Mobile">Mobile</SelectItem>
-                      <SelectItem value="AI/ML">AI/ML</SelectItem>
-                      <SelectItem value="AR/VR">AR/VR</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    Select the type of project
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormDescription>
+                      The title of your project
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Description Field */}
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Write your project description here..."
-                      className="min-h-32"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    A short description for project preview here.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              {/* TeamName Field */}
+              <FormField
+                control={form.control}
+                name="teamName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Team Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your team name" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Your Project Team Name
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Content Field */}
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Content</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Write your project main content here..."
-                      className="min-h-32"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Write your project overall content here
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              {/* Type Field */}
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Type</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="All Projects">All Projects</SelectItem>
+                        <SelectItem value="Web">Web</SelectItem>
+                        <SelectItem value="Mobile">Mobile</SelectItem>
+                        <SelectItem value="AI/ML">AI/ML</SelectItem>
+                        <SelectItem value="AR/VR">AR/VR</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Select the type of project
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Tags Field */}
-            <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tags</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Html, Css, Js, React Js, MongoDb" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Enter your project tags here
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Image Upload Field */}
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field: { value, onChange, ...fieldProps } }) => (
-                <FormItem>
-                  <FormLabel>Project Image</FormLabel>
-                  <FormControl>
-                    <div className="space-y-4">
-                      <Input
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          onChange(e.target.files);
-                          handleImageChange(e);
-                        }}
-                        {...fieldProps}
+              {/* Description Field */}
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write your project description here..."
+                        className="min-h-32"
+                        {...field}
                       />
-                      {imagePreview && (
-                        <div className="mt-2">
-                          <p className="text-sm mb-2">Preview:</p>
-                          <img
-                            src={imagePreview}
-                            alt="Preview"
-                            className="w-auto max-w-md h-auto rounded-md object-cover"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    Upload an image for project
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    </FormControl>
+                    <FormDescription>
+                      A short description for project preview here.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Live Link Field */}
-            <FormField
-              control={form.control}
-              name="liveLink"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Live Link</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter live link" {...field} value={field.value || ""} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              {/* Content Field */}
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Content</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write your project main content here..."
+                        className="min-h-32"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Write your project overall content here
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Github Link Field */}
-            <FormField
-              control={form.control}
-              name="githubLink"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Github Link</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter github link" {...field} value={field.value || ""} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              {/* Tags Field */}
+              <FormField
+                control={form.control}
+                name="tags"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tags</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Html, Css, Js, React Js, MongoDb" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Enter your project tags here
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Submit Button */}
-            <Button type="submit" className="w-full">Submit</Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+              {/* Image Upload Field */}
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field: { value, onChange, ...fieldProps } }) => (
+                  <FormItem>
+                    <FormLabel>Project Image</FormLabel>
+                    <FormControl>
+                      <div className="space-y-4">
+                        <Input
+                          id="image"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            onChange(e.target.files);
+                            handleImageChange(e);
+                          }}
+                          {...fieldProps}
+                        />
+                        {imagePreview && (
+                          <div className="mt-2">
+                            <p className="text-sm mb-2">Preview:</p>
+                            <img
+                              src={imagePreview}
+                              alt="Preview"
+                              className="w-3/4 md:w-auto max-w-md h-auto rounded-md object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </FormControl>
+                    <FormDescription>
+                      Upload an image for project
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Live Link Field */}
+              <FormField
+                control={form.control}
+                name="liveLink"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Live Link</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter live link" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Github Link Field */}
+              <FormField
+                control={form.control}
+                name="githubLink"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Github Link</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter github link" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Submit Button */}
+              <Button type="submit" className="w-full">Submit</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 

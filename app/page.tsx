@@ -40,10 +40,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen w-full">
+    <div className="flex flex-col items-center min-h-screen w-full overflow-x-hidden">
 
       {/* Hero Section */}
-      <section className="relative w-full h-[70vh] bg-gradient-to-r from-[#2B2B88] to-[#5CCAE8]">
+      <section className="relative w-full h-[70vh] bg-gradient-to-r from-[#2B2B88] to-[#5CCAE8] md:p-20">
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 flex flex-col items-center justify-center h-full w-full text-center text-white">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">BITS Pilani Coding Club</h1>
@@ -64,7 +64,7 @@ export default function Home() {
       {/* Quick Links */}
       <section className="bg-[#2B2B88] w-full text-white py-4">
         <div className="flex w-full justify-center">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-20 gap-y-5">
             <Link href="/events" className="flex items-center gap-2 hover:text-[#FFE275] transition-colors">
               <Calendar size={20} />
               <span className="lg:text-lg">Events</span>
@@ -86,16 +86,16 @@ export default function Home() {
       </section>
 
       {/* What's New Section */}
-      <section className="py-16 w-full flex bg-gray-100 justify-center">
-        <div className="px-4 w-3/4">
+      <section className="py-16 w-full flex bg-gray-100 justify-center md:p-10">
+        <div className="px-4 md:w-full lg:w-full xl:w-full 2xl:w-3/4 w-full">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#2B2B88]">What&apos;s New</h2>
+            <h2 className="text-xl md:text-4xl font-bold text-[#2B2B88]">What&apos;s New</h2>
             <Link href="/updates" className="text-[#5CCAE8] hover:text-[#082F3A] flex items-center transition-colors duration-300">
-              View all updates <ChevronRight size={16} />
+              View Updates <ChevronRight size={16} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {
               updates.slice(0, 3).map((update) => {
                 return (
@@ -132,26 +132,27 @@ export default function Home() {
 
       {/* Gallery Section */}
       <section className="py-16 w-full flex justify-center">
-        <div className="w-2/3 flex flex-col items-center">
-          <h2 className="text-3xl font-bold text-[#2B2B88] mb-8 lg:text-5xl">Gallery</h2>
+        <div className="w-full md:w-2/3 flex flex-col items-center">
+          <h2 className="text-4xl md:text-3xl font-bold text-[#2B2B88] mb-8 lg:text-5xl">Gallery</h2>
           <GallerySlider />
         </div>
       </section>
 
       {/* Upcoming Events & Activities */}
-      <section className="py-16 bg-gray-50 w-full flex justify-center">
+      <section className="py-16 bg-gray-50 w-full flex justify-center md:p-10">
         <div className="container px-4">
           <Tabs defaultValue="events">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-[#2B2B88] lg:text-4xl">Upcoming Activities</h2>
-              <TabsList>
+            <div className="flex-col flex md:flex-row items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold text-[#2B2B88] lg:text-5xl">Upcoming Activities</h2>
+
+              <TabsList className="mt-5">
                 <TabsTrigger value="events" className="cursor-pointer" onClick={() => setType("event")}>Events</TabsTrigger>
                 <TabsTrigger value="workshops" className="cursor-pointer" onClick={() => setType("workshop")}>Workshops</TabsTrigger>
                 <TabsTrigger value="speakers" className="cursor-pointer" onClick={() => setType("guest speaker")}>Guest Speakers</TabsTrigger>
               </TabsList>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
               {
                 events
                   .filter(event => event.category?.toLowerCase() === type)
@@ -214,11 +215,13 @@ export default function Home() {
 
       {/* Student Projects Showcase */}
       <section className="py-16 w-full flex justify-center">
-        <div className="px-4 w-5/6">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-[#2B2B88] lg:text-5xl text">Student Projects</h2>
-            <Link href="/projects" className="text-[#1DA8CE] hover:text-[#082F3A] flex items-center transition-colors duration-500">
-              View all projects <ChevronRight size={16} />
+        <div className="px-4 w-full lg:p-28">
+          <div className="flex-col items-start md:flex-row flex md:items-center justify-between mb-8 w-full">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#2B2B88] lg:text-5xl text">Student Projects</h2>
+
+            <Link href="/projects" className="text-[#1DA8CE] hover:text-[#082F3A] flex items-center gap-2 transition-colors duration-500">
+              <p className="w-max">View all projects</p>
+              <ChevronRight size={16} />
             </Link>
           </div>
 
@@ -259,5 +262,3 @@ export default function Home() {
     </div>
   )
 }
-
-// text-[#1DA8CE] hover:text-[#082F3A]

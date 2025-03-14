@@ -17,7 +17,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "BITS Pilani Coding Club",
-  description: "Official website of the Coding Club of BITS Pilani BSc Computer Science",
+  description: "Official website of the Coding Club of BITS Pilani BSC Computer Science",
 }
 
 export default function RootLayout({

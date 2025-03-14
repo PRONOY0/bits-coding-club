@@ -105,7 +105,7 @@ const ProjectById = () => {
                             {formatDate(project.createdAt)}
                           </span>
                         </div>
-                        <h1 className="text-white text-2xl md:text-4xl font-bold mt-2">
+                        <h1 className="text-white text-2xl md:text-4xl font-bold my-5">
                           {project.title}
                         </h1>
                       </div>

@@ -46,7 +46,7 @@ export default function GallerySlider() {
   }, [isAutoPlaying]) // Removed currentIndex
 
   return (
-    <div className="relative w-2/3">
+    <div className="relative md:w-full w-full p-5">
       <div className="relative h-[50vh] md:h-[60vh] overflow-hidden rounded-lg">
         {galleryImages.map((image, index) => (
           <div
@@ -61,9 +61,6 @@ export default function GallerySlider() {
               className="object-contain"
               priority={index === 0}
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
-              <p className="text-lg font-medium">{image.caption}</p>
-            </div>
           </div>
         ))}
       </div>

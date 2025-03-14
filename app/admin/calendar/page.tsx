@@ -95,7 +95,7 @@ const EventForm = () => {
     };
 
     return (
-        <div className='w-full h-[90vh] flex justify-center items-center'>
+        <div className='w-full h-[90vh] flex justify-center items-center p-5'>
             <Card className="w-full max-w-md mx-auto">
                 <CardHeader>
                     <CardTitle>Add Calendar Event</CardTitle>

@@ -10,7 +10,6 @@ import Loader from "@/components/Loader/page";
 import { useState } from "react";
 
 export default function UpdatesPage() {
-  // This would typically come from a database or API
   const { updates, loading } = useAppContext();
   const [loadMore, setLoadMore] = useState(false);
 
@@ -37,7 +36,6 @@ export default function UpdatesPage() {
         return <Badge>Other</Badge>
     }
   }
-
   return (
     <div className="w-full">
       {
@@ -49,7 +47,7 @@ export default function UpdatesPage() {
           :
           (
             <>
-              <div className="w-full px-64 py-24 flex flex-col">
+              <div className="w-full px-5 md:px-8 lg:px-8 xl:px-8 2xl:px-64 py-24 flex flex-col">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                   <div>
                     <h1 className="text-3xl font-bold text-[#2B2B88] lg:text-5xl">What&apos;s New</h1>
@@ -57,69 +55,69 @@ export default function UpdatesPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {
-                    loadMore ? 
-                    (
-                      updates.slice(0, 9).map((update) => (
-                        <Card key={update.id} className="overflow-hidden flex flex-col hover:bg-[#999]/10 transition-all duration-500 hover:scale-105">
-                          <div className="relative h-72 w-full">
-                            <Image src={update.image || "/projects.png"} alt={update.title!} fill className="object-cover p-5 rounded-3xl" />
-                          </div>
-                          <CardHeader className="pb-2">
-                            <div className="flex justify-between items-start">
-                              {getCategoryBadge(update.category!)}
-                              <span className="text-sm text-muted-foreground">{formatDate(update.date!)}</span>
+                    loadMore ?
+                      (
+                        updates.slice(0, 9).map((update) => (
+                          <Card key={update.id} className="overflow-hidden flex flex-col hover:bg-[#999]/10 transition-all duration-500 hover:scale-105">
+                            <div className="relative h-72 w-full">
+                              <Image src={update.image || "/projects.png"} alt={update.title!} fill className="object-cover p-5 rounded-3xl" />
                             </div>
-                            <CardTitle className="mt-2">{update.title}</CardTitle>
-                          </CardHeader>
-                          <CardContent className="flex-grow">
-                            <p>{update.shortDescription}</p>
-                          </CardContent>
-                          <CardFooter>
-                            <Link
-                              href={`/updates/${update.id}`}
-                              className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
-                            >
-                              Read more →
-                            </Link>
-                          </CardFooter>
-                        </Card>
-                      ))
-                    ) 
-                    : 
-                    (
-                      updates.slice(0, 6).map((update) => (
-                        <Card key={update.id} className="overflow-hidden flex flex-col hover:bg-[#999]/10 transition-all duration-500 hover:scale-105">
-                          <div className="relative h-72 w-full">
-                            <Image src={update.image || "/projects.png"} alt={update.title!} fill className="object-cover p-5 rounded-3xl" />
-                          </div>
-                          <CardHeader className="pb-2">
-                            <div className="flex justify-between items-start">
-                              {getCategoryBadge(update.category!)}
-                              <span className="text-sm text-muted-foreground">{formatDate(update.date!)}</span>
+                            <CardHeader className="pb-2">
+                              <div className="flex justify-between items-start">
+                                {getCategoryBadge(update.category!)}
+                                <span className="text-sm text-muted-foreground">{formatDate(update.date!)}</span>
+                              </div>
+                              <CardTitle className="mt-2">{update.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                              <p>{update.shortDescription}</p>
+                            </CardContent>
+                            <CardFooter>
+                              <Link
+                                href={`/updates/${update.id}`}
+                                className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
+                              >
+                                Read more →
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        ))
+                      )
+                      :
+                      (
+                        updates.slice(0, 6).map((update) => (
+                          <Card key={update.id} className="overflow-hidden flex flex-col hover:bg-[#999]/10 transition-all duration-500 hover:scale-105">
+                            <div className="relative h-72 w-full">
+                              <Image src={update.image || "/projects.png"} alt={update.title!} fill className="object-cover p-5 rounded-3xl" />
                             </div>
-                            <CardTitle className="mt-2">{update.title}</CardTitle>
-                          </CardHeader>
-                          <CardContent className="flex-grow">
-                            <p>{update.shortDescription}</p>
-                          </CardContent>
-                          <CardFooter>
-                            <Link
-                              href={`/updates/${update.id}`}
-                              className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
-                            >
-                              Read more →
-                            </Link>
-                          </CardFooter>
-                        </Card>
-                      ))
-                    )
+                            <CardHeader className="pb-2">
+                              <div className="flex justify-between items-start">
+                                {getCategoryBadge(update.category!)}
+                                <span className="text-sm text-muted-foreground">{formatDate(update.date!)}</span>
+                              </div>
+                              <CardTitle className="mt-2">{update.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                              <p>{update.shortDescription}</p>
+                            </CardContent>
+                            <CardFooter>
+                              <Link
+                                href={`/updates/${update.id}`}
+                                className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium transition-colors duration-300"
+                              >
+                                Read more →
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        ))
+                      )
                   }
                 </div>
 
                 <div className="mt-12 flex justify-center cursor-pointer">
-                  <Button variant="outline" onClick={() => setLoadMore((prev)=>!prev)}>
+                  <Button variant="outline" onClick={() => setLoadMore((prev) => !prev)}>
                     {
                       loadMore ? "Collapse" : "Load More"
                     }

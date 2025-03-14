@@ -38,7 +38,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             ref={containerRef}
         >
             <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10 lg:mt-20">
-                <h2 className="lg:text-7xl font-bold text-[#2B2B88] text-start">Recruitment Process</h2>
+                <h2 className="lg:text-7xl font-bold text-[#2B2B88] text-start text-2xl md:text-4xl">Recruitment Process</h2>
             </div>
 
             <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
@@ -51,7 +51,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                             <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full flex items-center justify-center">
                                 <div className="h-4 w-4 rounded-full bg-[#0F0F2F] border border-neutral-300 p-2" />
                             </div>
-                            <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-neutral-500 dark:text-neutral-500 lg:text-3xl">
+                            <h3 className="hidden md:block text-xl md:pl-20 md:text-3xl font-bold text-neutral-500 dark:text-neutral-500 lg:text-3xl">
                                 {item.title}
                             </h3>
                         </div>

@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useSession } from "next-auth/react";
 import Error403 from "@/components/UnAuthenticated/page";
 import Loader from "@/components/Loader/page";
+import listPlugin from "@fullcalendar/list";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { format } from "date-fns";
@@ -24,6 +25,7 @@ interface Event {
 
 export default function EventCalendar() {
     const { data: session, status } = useSession();
+    const [calendarView, setCalendarView] = useState("dayGridMonth");
     const [events, setEvents] = useState<Event[]>([]);
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
     const [formData, setFormData] = useState({ title: "", start: "", end: "" });
@@ -102,6 +104,12 @@ export default function EventCalendar() {
         }
     }
 
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setCalendarView("listWeek"); // Switch to list view on mobile
+        }
+    }, []);
+
     if (status === "loading") return <div className='w-full min-h-[85vh] flex justify-center items-center'><Loader /></div>;
     if (!session || session.user.role !== "admin") return <div className='w-full h-full flex justify-center items-center'><Error403 /></div>;
 
@@ -117,8 +125,8 @@ export default function EventCalendar() {
                         (
                             <div>
                                 <FullCalendar
-                                    plugins={[dayGridPlugin, interactionPlugin]}
-                                    initialView="dayGridMonth"
+                                    plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
+                                    initialView={calendarView}
                                     events={events}
                                     eventClick={({ event }) => setSelectedEvent({
                                         id: event.id,
@@ -126,7 +134,15 @@ export default function EventCalendar() {
                                         start: event.start ? format(new Date(event.start), "yyyy-MM-dd'T'HH:mm") : "",
                                         end: event.start ? format(new Date(event.start ?? ""), "yyyy-MM-dd'T'HH:mm") : format(new Date(event.start ?? ""), "yyyy-MM-dd'T'HH:mm"),
                                     })}
-                                    headerToolbar={{ left: "prev,next today", center: "title", right: "dayGridMonth,dayGridWeek,dayGridDay" }}
+                                    headerToolbar={{
+                                        left: "prev,next today",
+                                        center: "title",
+                                        right: "dayGridMonth,listWeek",
+                                    }}
+                                    buttonText={{
+                                        today: "Today",
+                                    }}
+                                    eventDisplay="list-item"
                                     height="auto"
                                 />
 

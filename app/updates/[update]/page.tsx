@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import axios from 'axios';
-import { Calendar, ExternalLink, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, ExternalLink, Tag } from 'lucide-react';
 import Loader from '@/components/Loader/page';
 
 interface Update {
@@ -20,6 +20,7 @@ interface Update {
 const Update = () => {
   const pathname = usePathname();
   const urls = pathname.split("/");
+  const router = useRouter();
   const [updates, setUpdates] = useState<Update[]>([]);
 
   const formatDate = (dateString: string | Date) => {
@@ -48,6 +49,10 @@ const Update = () => {
     fetchUpdates();
   }, [])
 
+  const handleBack = () => {
+    router.push("/updates");
+  };
+
   console.log(updates);
 
   return (
@@ -60,6 +65,18 @@ const Update = () => {
                 <div key={update.id}>
                   <div className="bg-white min-h-screen">
                     {/* Hero Section */}
+
+                    <div className="bg-white sticky top-0 z-30 shadow-sm">
+                      <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+                        <button
+                          onClick={handleBack}
+                          className="flex items-center cursor-pointer text-gray-700 hover:text-[#cf2027] transition font-medium"
+                        >
+                          <ArrowLeft className="h-4 w-4 mr-2" />
+                          <span>Back to updates</span>
+                        </button>
+                      </div>
+                    </div>
                     <div className="relative h-64 md:h-96 w-full overflow-hidden">
                       <div
                         className="absolute inset-0 bg-cover bg-center"

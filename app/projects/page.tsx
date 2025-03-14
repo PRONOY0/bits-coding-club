@@ -30,29 +30,33 @@ export default function ProjectsPage() {
 
 
   return (
-    <div className="w-full">
-      <div className="w-full px-64 py-24 flex flex-col">
+    <div className="w-full overflow-x-hidden">
+      <div className="w-full px-3 md:px-8 lg:px-8 xl:px-8 2xl:px-64 py-24 flex flex-col">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-[#2B2B88]">Student Projects</h1>
+            <h1 className="text-3xl font-bold text-[#2B2B88] lg:text-5xl">Student Projects</h1>
             <p className="text-muted-foreground mt-2">Explore innovative projects developed by our club members</p>
           </div>
         </div>
 
         <Tabs defaultValue={selectedTab} onValueChange={setSelectedTab} className="w-full">
-          <TabsList className="mb-8">
+          <TabsList className="mb-8 grid grid-cols-3 md:flex">
             <TabsTrigger value="all" className="cursor-pointer" onClick={() => handleTabChange("all")}>
               All Projects
             </TabsTrigger>
+
             <TabsTrigger value="Web" className="cursor-pointer" onClick={() => handleTabChange("Web")}>
               Web
             </TabsTrigger>
+
             <TabsTrigger value="Mobile" className="cursor-pointer" onClick={() => handleTabChange("Mobile")}>
               Mobile
             </TabsTrigger>
+
             <TabsTrigger value="AI/ML" className="cursor-pointer" onClick={() => handleTabChange("AI/ML")}>
               AI/ML
             </TabsTrigger>
+
             <TabsTrigger value="AR/VR" className="cursor-pointer" onClick={() => handleTabChange("AR/VR")}>
               AR/VR
             </TabsTrigger>

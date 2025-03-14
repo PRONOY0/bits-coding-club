@@ -111,60 +111,62 @@ const TestimonialCardForm = () => {
     <Error403 />
   </div>;
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <ToastContainer />
-      <CardHeader>
-        <CardTitle>Add new image to gallery</CardTitle>
-        <CardDescription>Fill in the details to add image</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Image Upload Field */}
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field: { value, onChange, ...fieldProps } }) => (
-                <FormItem>
-                  <FormLabel>Gallery Image</FormLabel>
-                  <FormControl>
-                    <div className="space-y-4">
-                      <Input
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          onChange(e.target.files);
-                          handleImageChange(e);
-                        }}
-                        {...fieldProps}
-                      />
-                      {imagePreview && (
-                        <div className="mt-2">
-                          <p className="text-sm mb-2">Preview:</p>
-                          <img
-                            src={imagePreview}
-                            alt="Preview"
-                            className="w-auto max-w-md h-auto rounded-md object-cover"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    Upload Gallery Image
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <div className='p-5'>
+      <Card className="w-full max-w-2xl mx-auto">
+        <ToastContainer />
+        <CardHeader>
+          <CardTitle>Add new image to gallery</CardTitle>
+          <CardDescription>Fill in the details to add image</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {/* Image Upload Field */}
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field: { value, onChange, ...fieldProps } }) => (
+                  <FormItem>
+                    <FormLabel>Gallery Image</FormLabel>
+                    <FormControl>
+                      <div className="space-y-4">
+                        <Input
+                          id="image"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            onChange(e.target.files);
+                            handleImageChange(e);
+                          }}
+                          {...fieldProps}
+                        />
+                        {imagePreview && (
+                          <div className="mt-2">
+                            <p className="text-sm mb-2">Preview:</p>
+                            <img
+                              src={imagePreview}
+                              alt="Preview"
+                              className="w-3/4 md:w-auto max-w-md h-auto rounded-md object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </FormControl>
+                    <FormDescription>
+                      Upload Gallery Image
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Submit Button */}
-            <Button type="submit" className="w-full">Submit</Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+              {/* Submit Button */}
+              <Button type="submit" className="w-full">Submit</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 
