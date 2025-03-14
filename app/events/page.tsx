@@ -2,7 +2,6 @@
 import Link from "next/link"
 import { Calendar, Clock } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { EventCard } from "../../components/index"
 import Footer from "@/components/Footer/Footer"
 import { useAppContext } from "@/context/page";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";

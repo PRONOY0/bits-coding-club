@@ -123,7 +123,7 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Link href={`/projects/${project.title}`} className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium ml-1 transition-colors duration-300">
+        <Link href={`/projects/${project.id}`} className="text-[#1DA8CE] hover:text-[#082F3A] text-sm font-medium ml-1 transition-colors duration-300">
           View details →
         </Link>
         <div className="flex gap-2">

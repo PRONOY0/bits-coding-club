@@ -64,7 +64,7 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/whats-new" className="text-sm hover:text-[#FFC900] transition-all duration-300">
+                                <Link href="/updates" className="text-sm hover:text-[#FFC900] transition-all duration-300">
                                     What&apos;s New
                                 </Link>
                             </li>
@@ -85,22 +85,17 @@ const Footer = () => {
                         <h3 className="text-xl font-semibold mb-4">Resources</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/activities/projects" className="text-sm hover:text-[#FFC900] transition-colors duration-300">
+                                <Link href="/projects" className="text-sm hover:text-[#FFC900] transition-colors duration-300">
                                     Projects
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/activities/competitions" className="text-sm hover:text-[#FFC900] transition-colors duration-300">
-                                    Competitions
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/events/guest-talks" className="text-sm hover:text-[#FFC900] transition-colors duration-300">
+                                <Link href="/events" className="text-sm hover:text-[#FFC900] transition-colors duration-300">
                                     Guest Talks
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/events/workshops" className="text-sm hover:text-[#FFC900] transition-colors duration-300">
+                                <Link href="/updates" className="text-sm hover:text-[#FFC900] transition-colors duration-300">
                                     Workshops
                                 </Link>
                             </li>
@@ -115,7 +110,7 @@ const Footer = () => {
                             <p className="text-[#fff]">Rajasthan, India</p>
                             <TooltipProvider>
                                 <Tooltip>
-                                    <TooltipTrigger className="flex items-center" onClick={()=>{gmailCopy()}}>
+                                    <TooltipTrigger className="flex items-center cursor-pointer" onClick={()=>{gmailCopy()}}>
                                         <FiMail size={16} className="mr-2" />
                                         codingclub@online.bits-pilani.ac.in
                                     </TooltipTrigger>

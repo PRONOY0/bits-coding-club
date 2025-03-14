@@ -23,7 +23,6 @@ const Navbar = () => {
                             { name: "Events", path: "/events", id: 3 },
                             { name: "Projects", path: "/projects", id: 4 },
                             { name: "Join Us", path: "/recruitment", id: 5 },
-                            { name: "Team", path: "/team", id: 6 },
                         ].map(({ name, path, id }) => (
                             <div key={id} className='w-fit flex flex-col justify-start'>
                                 <Link

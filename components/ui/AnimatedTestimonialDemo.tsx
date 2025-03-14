@@ -1,44 +1,55 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 
-export function AnimatedTestimonialsDemo() {
-  const testimonials = [
-    {
-      quote:
-        "Joining the club has been a transformative experience. The guidance and projects have sharpened my coding skills beyond expectation.",
-      name: "Pronoy Roy",
-      designation: "Student, Batch of 2025",
-      src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "The club's environment fosters innovation and teamwork. Collaborating with like-minded peers has been invaluable.",
-      name: "Pronoy Roy",
-      designation: "Student, Batch of 2024",
-      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "From hackathons to workshops, every experience has helped me grow technically and professionally.",
-      name: "Pronoy Roy",
-      designation: "Student, Batch of 2023",
-      src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "Being part of the coding club has opened doors to amazing opportunities. I’ve built projects I never thought I could.",
-      name: "Pronoy Roy",
-      designation: "Student, Batch of 2026",
-      src: "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      quote:
-        "This club is more than just coding—it's about problem-solving, networking, and pushing boundaries.",
-      name: "Pronoy Roy",
-      designation: "Student, Batch of 2027",
-      src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+// Define the structure for a testimonial
+type Testimonial = {
+  feedback: string;
+  name: string;
+  batch: string;
+  image: string;
+};
 
-  return <AnimatedTestimonials testimonials={testimonials} />;
+export function AnimatedTestimonialsDemo() {
+  type TransformedTestimonial = {
+    quote: string;
+    name: string;
+    designation: string;
+    src: string;
+  };
+  
+  const [testimonials, setTestimonials] = useState<TransformedTestimonial[]>([]); // State to store testimonials
+  const [loading, setLoading] = useState<boolean>(true); // State to track loading status
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await axios.get<{ testimonials: Testimonial[] }>("/api/testimonials"); // Fetch testimonials from API
+        
+        // Transform data to match the expected format for AnimatedTestimonials component
+        setTestimonials(
+          response.data.testimonials.map((t) => ({
+            quote: t.feedback, // Testimonial feedback
+            name: t.name, // Student name
+            designation: `Student, ${t.batch}`, // Batch info
+            src: t.image, // Image URL
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching testimonials:", error); // Log errors if fetching fails
+      } finally {
+        setLoading(false); // Ensure loading state is updated
+      }
+    };
+
+    fetchTestimonials(); // Call the function when component mounts
+  }, []);
+
+  // Show loading text while fetching data
+  if (loading) return <p className="text-center">Loading testimonials...</p>;
+
+  // Render testimonials once data is loaded
+  return <AnimatedTestimonials testimonials={testimonials} autoplay={true} />;
 }

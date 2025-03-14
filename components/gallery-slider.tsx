@@ -4,38 +4,24 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
-const galleryImages = [
-  {
-    src: "/img1.jpg",
-    alt: "Hackathon 2023",
-    caption: "Annual Hackathon - Students collaborating on innovative projects",
-  },
-  {
-    src: "/img2.jpg",
-    alt: "Workshop Session",
-    caption: "Web Development Workshop led by industry experts",
-  },
-  {
-    src: "/img3.jpg",
-    alt: "Coding Competition",
-    caption: "Students participating in the inter-university coding competition",
-  },
-  {
-    src: "/img6.jpg",
-    alt: "Guest Lecture",
-    caption: "Guest lecture by the CTO of a leading tech company",
-  },
-  {
-    src: "/img1.jpg",
-    alt: "Project Showcase",
-    caption: "Students presenting their semester projects to faculty and peers",
-  },
-]
+import { useAppContext } from "@/context/page"
 
 export default function GallerySlider() {
+  const { gallery } = useAppContext() // Fetching gallery images
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+
+  console.log(gallery);
+
+  // Transform gallery data into the required format
+  const dynamicImages = gallery.map((item) => ({
+    src: item.images, // Assuming `images` holds the URL
+    alt: "Gallery Image",
+    caption: "Event Highlights",
+  }))
+
+  // Combine both static and fetched images
+  const galleryImages = [...dynamicImages]
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % galleryImages.length)
@@ -43,10 +29,6 @@ export default function GallerySlider() {
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + galleryImages.length) % galleryImages.length)
-  }
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index)
   }
 
   useEffect(() => {
@@ -69,9 +51,8 @@ export default function GallerySlider() {
         {galleryImages.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentIndex ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentIndex ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
           >
             <Image
               src={image.src || "/placeholder.svg"}
@@ -111,10 +92,9 @@ export default function GallerySlider() {
         {galleryImages.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              index === currentIndex ? "bg-[#0F0F2F]" : "bg-gray-300 hover:bg-gray-400"
-            }`}
-            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-colors ${index === currentIndex ? "bg-[#0F0F2F]" : "bg-gray-300 hover:bg-gray-400"
+              }`}
+            onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -122,4 +102,3 @@ export default function GallerySlider() {
     </div>
   )
 }
-
