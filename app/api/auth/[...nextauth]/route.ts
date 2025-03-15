@@ -3,4 +3,5 @@ import { authOptions } from "@/lib/auth"; // Correct import
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export const GET = async (req: Request) => handler(req);
+export const POST = async (req: Request) => handler(req);
