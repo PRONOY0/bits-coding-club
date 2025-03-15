@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import { prisma } from "@/lib/prisma";
-import path from "path";
-import { writeFile } from "fs/promises";
-import fs from "fs";
 
 export async function GET(req: Request) {
   try {
@@ -25,35 +22,28 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    let imgLink: string | null = null;
-
     const file = formData.get("image") as File;
 
-    if (file) {
-      const buffer = Buffer.from(await file.arrayBuffer());
-
-      // Use Vercel's writable /tmp directory
-      const tempFilePath = `/tmp/${file.name}`;
-
-      await writeFile(tempFilePath, buffer); // Save file in /tmp
-
-      imgLink = await uploadToCloudinary(tempFilePath, "Gallery_BSC");
-
-      // Optionally: Delete the file after upload (since it's a temp file)
-      fs.unlinkSync(tempFilePath);
+    if (!file) {
+      return NextResponse.json(
+        { success: false, error: "No file uploaded" },
+        { status: 400 }
+      );
     }
 
-    console.log("imgLink", imgLink);
+    const buffer = Buffer.from(await file.arrayBuffer());
 
+    // Upload directly to Cloudinary
+    const imgLink = await uploadToCloudinary(buffer, "Gallery_BSC");
+
+    // Save to database
     const newEvent = await prisma.gallery.create({
-      data: {
-        images: imgLink!,
-      },
+      data: { images: imgLink },
     });
 
     return NextResponse.json({ success: true, event: newEvent });
   } catch (error) {
-    console.error("Error creating gallery:", error);
+    console.error("Error uploading image:", error);
     return NextResponse.json(
       { success: false, error: `${error}` },
       { status: 500 }
