@@ -65,12 +65,7 @@ export async function PUT(
       const file = formData.get("image") as File;
       const buffer = Buffer.from(await file.arrayBuffer());
 
-      const tempDir = path.join(process.cwd(), "tmp");
-      await fs.promises.mkdir(tempDir, { recursive: true });
-      const tempFilePath = path.join(tempDir, file.name);
-      await writeFile(tempFilePath, buffer);
-
-      imgLink = await uploadToCloudinary(tempFilePath, "Testimonials_BSC");
+      imgLink = await uploadToCloudinary(buffer, "Testimonials_BSC");
       updateData.image = imgLink;
     }
 

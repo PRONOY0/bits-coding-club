@@ -38,20 +38,15 @@ export async function POST(req: Request) {
     const time = formData.get("time") as string;
 
     const file = formData.get("image") as File;
-    console.log("image file",file);
+    console.log("image file", file);
 
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
 
-      const tempDir = path.join(process.cwd(), "tmp");
-      await fs.promises.mkdir(tempDir, { recursive: true });
-      const tempFilePath = path.join(tempDir, file.name);
-      await writeFile(tempFilePath, buffer);
-
-      imgLink = await uploadToCloudinary(tempFilePath, "Events_BSC");
+      imgLink = await uploadToCloudinary(buffer, "Events_BSC");
     }
 
-    console.log("imgLink",imgLink);
+    console.log("imgLink", imgLink);
 
     const newEvent = await prisma.event.create({
       data: {

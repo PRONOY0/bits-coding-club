@@ -38,12 +38,7 @@ export async function POST(req: Request) {
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
 
-      const tempDir = path.join(process.cwd(), "tmp");
-      await fs.promises.mkdir(tempDir, { recursive: true });
-      const tempFilePath = path.join(tempDir, file.name);
-      await writeFile(tempFilePath, buffer);
-
-      imgLink = await uploadToCloudinary(tempFilePath, "Updates_BSC");
+      imgLink = await uploadToCloudinary(buffer, "Updates_BSC");
     }
 
     const newUpdate = await prisma.update.create({
