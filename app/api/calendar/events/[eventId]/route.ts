@@ -108,7 +108,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { eventId: string } }
 ) {
   console.log("DELETE Called");
