@@ -17,6 +17,14 @@ interface CalendarEventUpdatePayload {
   };
 }
 
+type Params = {
+  eventId: string;
+};
+
+type RouteContext = {
+  params: Promise<Params>;
+};
+
 export async function PUT(req: NextRequest) {
   console.log("Called");
   const session = await getServerSession(authOptions);
@@ -107,13 +115,13 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { eventId: string } }
-) {
-  console.log("DELETE Called");
+export async function DELETE(req: NextRequest, { params }: RouteContext) {
   const session = await getServerSession(authOptions);
-  const { eventId } = params;
+
+  console.log("params:", params);
+
+  const { eventId } = await params;
+
   console.log("eventId", eventId);
 
   if (!session || !session.accessToken) {

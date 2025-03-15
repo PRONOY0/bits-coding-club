@@ -9,6 +9,7 @@ const API_URL = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}
 
 export async function GET() {
   const session = await getServerSession(authOptions);
+  console.log(session);
 
   if (!session || !session.accessToken) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

@@ -36,6 +36,7 @@ export default function GoogleCalendar() {
     async function fetchEvents() {
       try {
         const res = await fetch("/api/calendar/events");
+        console.log("res",res);
 
         if (!res.ok) {
           setPopUp(true);
@@ -59,8 +60,8 @@ export default function GoogleCalendar() {
       }
     }
 
-    if (status === "authenticated") fetchEvents();
-  }, [session, status]);
+    fetchEvents();
+  }, [status,session]);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
