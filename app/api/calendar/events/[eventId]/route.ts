@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 const CALENDAR_ID =
   "2153dbb17197506a8df99fda41cb76223ee67d41b9991e03aea88906446c25eb@group.calendar.google.com";
