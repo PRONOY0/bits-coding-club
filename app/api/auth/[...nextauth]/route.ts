@@ -107,5 +107,5 @@ async function refreshAccessToken(token: CustomJWT) {
   }
 }
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions as NextAuthOptions);
 export { handler as GET, handler as POST };
