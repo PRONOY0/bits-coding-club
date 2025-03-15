@@ -11,7 +11,7 @@ export interface CustomJWT extends JWT {
   role?: string;
 }
 
-const adminEmails = ["pronoyroy782@gmail.com"];
+const adminEmails = ["pronoyroy782@gmail.com", "codingclub@online.bits-pilani.ac.in"];
 
 export interface CustomSession extends Session {
   accessToken?: string;
