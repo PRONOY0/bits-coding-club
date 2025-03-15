@@ -17,7 +17,7 @@ export default function Home() {
   const { updates, projects, events, loading, error } = useAppContext();
   const [type, setType] = useState("event");
 
-  if (loading) return <div className="w-full lg:h-[90vh] flex justify-center items-center"><Loader /></div>;
+  if (loading) return <div className="w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex justify-center items-center"><Loader /></div>;
   if (error) return <div><Error403 /></div>;
 
   const getCategoryColorClass = (category: string) => {

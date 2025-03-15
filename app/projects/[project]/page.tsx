@@ -236,7 +236,7 @@ const ProjectById = () => {
           )
           :
           (
-            <div className='w-full h-[90vh] flex items-center justify-center'>
+            <div className='w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex items-center justify-center'>
               <Loader />
             </div>
           )

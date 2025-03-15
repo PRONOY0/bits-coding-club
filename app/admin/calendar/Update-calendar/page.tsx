@@ -23,12 +23,24 @@ interface Event {
     end: string;
 }
 
+interface UpdatedEventFields {
+    title?: string;
+    start?: string;
+    end?: string;
+    eventId: string;
+}
+
+
 export default function EventCalendar() {
     const { data: session, status } = useSession();
     const [calendarView, setCalendarView] = useState("dayGridMonth");
     const [events, setEvents] = useState<Event[]>([]);
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const [originalEvent, setOriginalEvent] = useState<Event | null>(null); // Store original event data
+    const [validationError, setValidationError] = useState<string | null>(null);
+    console.log(validationError);
     const [formData, setFormData] = useState({ title: "", start: "", end: "" });
+    console.log(formData);
     const [loader, setLoader] = useState(false);
 
     useEffect(() => {
@@ -58,32 +70,88 @@ export default function EventCalendar() {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         setSelectedEvent((prev) => prev ? { ...prev, [name]: value } : null);
+
+        setValidationError(null);
+
+        if (selectedEvent) {
+            const updatedEvent = {
+                ...selectedEvent,
+                [name]: value
+            };
+
+            // Only validate if both fields have values
+            if (updatedEvent.start && updatedEvent.end) {
+                const startDate = new Date(updatedEvent.start);
+                const endDate = new Date(updatedEvent.end);
+
+                if (endDate <= startDate) {
+                    setValidationError("End time must be after start time");
+                }
+            }
+        }
     };
 
     const handleEdit = async () => {
-        const formattedEvent = {
-            title: formData.title,
-            start: new Date(formData.start).toISOString(),
-            end: new Date(formData.start).toISOString(),
-            eventId: selectedEvent?.id,
+        if (!selectedEvent) return;
+
+        if (selectedEvent.start && selectedEvent.end) {
+            const startDate = new Date(selectedEvent.start);
+            const endDate = new Date(selectedEvent.end);
+
+            if (endDate <= startDate) {
+                setValidationError("End time must be after start time");
+                toast.error("End time must be after start time");
+                return;
+            }
+        }
+
+        // Only include fields that have actually changed in the update
+        const updatedFields: UpdatedEventFields = {
+            eventId: selectedEvent.id
         };
-        console.log("Editing event", selectedEvent?.id, formattedEvent);
+
+        if (selectedEvent.title !== originalEvent?.title) {
+            updatedFields.title = selectedEvent.title;
+        }
+
+        if (selectedEvent.start !== originalEvent?.start) {
+            updatedFields.start = new Date(selectedEvent.start).toISOString();
+        }
+
+        if (selectedEvent.end !== originalEvent?.end) {
+            updatedFields.end = new Date(selectedEvent.end).toISOString();
+        }
+
+        // If no fields were changed, just close the modal
+        if (Object.keys(updatedFields).length === 1) {
+            setSelectedEvent(null);
+            return;
+        }
+
+        console.log("Editing event", selectedEvent.id, updatedFields);
 
         try {
-            const response = await axios.put(`/api/calendar/events/${selectedEvent?.id}`, formattedEvent);
+            const response = await axios.put(`/api/calendar/events/${selectedEvent.id}`, updatedFields);
 
-            console.log(response)
+            console.log(response);
 
             if (response.status === 200) {
-                toast.success("success edit");
+                toast.success("Event updated successfully");
                 setSelectedEvent(null);
                 setTimeout(() => {
                     location.reload();
                     setLoader(true);
-                }, 1000)
+                }, 1000);
             }
         } catch (error) {
-            console.log(error);
+            console.error("Error updating event:", error);
+            toast.error("Failed to update event");
+            if (axios.isAxiosError(error) && error.response?.data?.error === "End time must be after start time" ||
+                axios.isAxiosError(error) && error.response?.data?.error?.includes("time range is empty")) {
+                setValidationError("End time must be after start time");
+            } else {
+                toast.error("Failed to update event");
+            }
         }
     };
 
@@ -97,10 +165,11 @@ export default function EventCalendar() {
                 setTimeout(() => {
                     location.reload();
                     setLoader(true);
-                }, 1000)
+                }, 1000);
             }
         } catch (error) {
             console.log(error);
+            toast.error("Failed to delete event");
         }
     }
 
@@ -110,7 +179,7 @@ export default function EventCalendar() {
         }
     }, []);
 
-    if (status === "loading") return <div className='w-full min-h-[85vh] flex justify-center items-center'><Loader /></div>;
+    if (status === "loading") return <div className='w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex justify-center items-center'><Loader /></div>;
     if (!session || session.user.role !== "admin") return <div className='w-full h-full flex justify-center items-center'><Error403 /></div>;
 
     return (
@@ -118,7 +187,7 @@ export default function EventCalendar() {
             {
                 loader ?
                     (
-                        <div className='w-full min-h-[85vh] flex justify-center items-center'><Loader /></div>
+                        <div className='w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex justify-center items-center'><Loader /></div>
                     )
                     :
                     (
@@ -128,12 +197,21 @@ export default function EventCalendar() {
                                     plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
                                     initialView={calendarView}
                                     events={events}
-                                    eventClick={({ event }) => setSelectedEvent({
-                                        id: event.id,
-                                        title: event.title,
-                                        start: event.start ? format(new Date(event.start), "yyyy-MM-dd'T'HH:mm") : "",
-                                        end: event.start ? format(new Date(event.start ?? ""), "yyyy-MM-dd'T'HH:mm") : format(new Date(event.start ?? ""), "yyyy-MM-dd'T'HH:mm"),
-                                    })}
+                                    eventClick={({ event }) => {
+                                        const eventData = {
+                                            id: event.id,
+                                            title: event.title,
+                                            start: event.start ? format(new Date(event.start), "yyyy-MM-dd'T'HH:mm") : "",
+                                            end: event.end ? format(new Date(event.end), "yyyy-MM-dd'T'HH:mm") : "",
+                                        };
+                                        setSelectedEvent(eventData);
+                                        setOriginalEvent(eventData); // Store original data for comparison
+                                        setFormData({
+                                            title: eventData.title,
+                                            start: eventData.start,
+                                            end: eventData.end
+                                        });
+                                    }}
                                     headerToolbar={{
                                         left: "prev,next today",
                                         center: "title",
@@ -146,7 +224,6 @@ export default function EventCalendar() {
                                     height="auto"
                                 />
 
-                                {/* Modal for event details */}
                                 {selectedEvent && (
                                     <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
                                         <DialogContent>
@@ -158,8 +235,11 @@ export default function EventCalendar() {
                                                 <Label>Title</Label>
                                                 <Input name="title" value={selectedEvent.title} onChange={handleInputChange} className="mb-5 mt-2" />
 
-                                                <Label>Date</Label>
+                                                <Label>Start Date & Time</Label>
                                                 <Input name="start" type="datetime-local" value={selectedEvent.start} onChange={handleInputChange} className="mb-5 mt-2" />
+
+                                                <Label>End Date & Time</Label>
+                                                <Input name="end" type="datetime-local" value={selectedEvent.end} onChange={handleInputChange} className="mb-5 mt-2" />
 
                                                 <div className="flex gap-4 mt-4">
                                                     <Button variant="outline" onClick={handleEdit} className="cursor-pointer">Edit</Button>

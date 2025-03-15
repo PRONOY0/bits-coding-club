@@ -40,7 +40,7 @@ export default function UpdatesPage() {
     <div className="w-full">
       {
         loading ?
-          (<div className="w-full h-[90vh] flex justify-center items-center">
+          (<div className="w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex justify-center items-center">
             <Loader />
           </div>
           )

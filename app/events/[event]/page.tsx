@@ -62,7 +62,7 @@ const EventsById = () => {
     }
   };
 
-  if (loading) return <div className="w-full h-[90vh] flex justify-center items-center"><Loader /></div>;
+  if (loading) return <div className="w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex justify-center items-center"><Loader /></div>;
   if (!event) return <div className="p-8 text-center">Event not found</div>;
 
   const isUpcoming = isEventUpcoming(event.date);

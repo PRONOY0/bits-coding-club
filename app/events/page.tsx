@@ -22,7 +22,7 @@ type EventType = {
 export default function EventsPage() {
   // This would typically come from a database or API
 
-  const { events, loading } = useAppContext();
+  const { events } = useAppContext();
 
   console.log("Event Category:", events);
 

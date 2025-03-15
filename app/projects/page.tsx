@@ -16,9 +16,9 @@ export default function ProjectsPage() {
   const { projects, loading } = useAppContext();
   const [selectedTab, setSelectedTab] = useState("all");
   const [loader, setLoader] = useState(false);
-  if (loading) return <div className="w-full h-screen flex justify-center items-center"><Loader /></div>
+  if (loading) return <div className="w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex justify-center items-center"><Loader /></div>
 
-  if (loader) return <div className="w-full h-screen  flex justify-center items-center"><Loader /></div>
+  if (loader) return <div className="w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh]  flex justify-center items-center"><Loader /></div>
 
   const handleTabChange = (tab: string) => {
     setLoader(true);

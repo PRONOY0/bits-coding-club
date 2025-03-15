@@ -93,7 +93,7 @@ const DeleteEvents = () => {
     }
   }
 
-  if (status === "loading") return <div className='w-full h-screen flex justify-center items-center'><Loader /></div>;
+  if (status === "loading") return <div className='w-full sm:h-[90vh] md:h-[90vh] lg:h-[90vh] xl:h-[90vh] 2xl:h-[90vh] flex justify-center items-center'><Loader /></div>;
   if (!session || session.user.role !== "admin") return <div className='w-full h-full flex justify-center items-center'>
     <Error403 />
   </div>;

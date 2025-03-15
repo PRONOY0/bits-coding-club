@@ -5,6 +5,18 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 const CALENDAR_ID =
   "2153dbb17197506a8df99fda41cb76223ee67d41b9991e03aea88906446c25eb@group.calendar.google.com";
 
+interface CalendarEventUpdatePayload {
+  summary?: string;
+  start?: {
+    dateTime: string;
+    timeZone: string;
+  };
+  end?: {
+    dateTime: string;
+    timeZone: string;
+  };
+}
+
 export async function PUT(req: NextRequest) {
   console.log("Called");
   const session = await getServerSession(authOptions);
@@ -13,7 +25,8 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { eventId, title, start, end } = await req.json();
+  const requestData = await req.json();
+  const { eventId, title, start, end } = requestData;
 
   if (!eventId) {
     return NextResponse.json(
@@ -22,39 +35,69 @@ export async function PUT(req: NextRequest) {
     );
   }
 
-  if (!start || !end) {
-    return NextResponse.json(
-      { error: "Start and End time are required" },
-      { status: 400 }
-    );
-  }
-
   console.log(`Updating event ID: ${eventId} and ${CALENDAR_ID}`);
 
   try {
-    const response = await fetch(
+    const fetchResponse = await fetch(
       `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events/${eventId}`,
       {
-        method: "PATCH", // Change from PUT to PATCH
+        method: "GET", // Change from PUT to PATCH
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          summary: title,
-          start: { dateTime: start, timeZone: "UTC" },
-          end: { dateTime: end, timeZone: "UTC" },
-        }),
       }
     );
 
-    console.log("response", response);
-
-    if (!response.ok) {
-      throw new Error("Failed to update event");
+    if (!fetchResponse.ok) {
+      throw new Error("Failed to fetch existing event");
     }
 
-    const updatedEvent = await response.json();
+    const existingEvent = await fetchResponse.json();
+
+    const updatePayload: CalendarEventUpdatePayload = {};
+
+    if (title !== undefined) {
+      updatePayload.summary = title;
+    }
+
+    if (start !== undefined) {
+      updatePayload.start = {
+        dateTime: start,
+        timeZone: existingEvent.start?.timeZone || "UTC",
+      };
+    }
+
+    if (end !== undefined) {
+      updatePayload.end = {
+        dateTime: end,
+        timeZone: existingEvent.end?.timeZone || "UTC",
+      };
+    }
+
+    console.log(`Updating event ID: ${eventId}, payload:`, updatePayload);
+
+    const updateResponse = await fetch(
+      `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events/${eventId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatePayload),
+      }
+    );
+
+    if (!updateResponse.ok) {
+      const errorData = await updateResponse.json();
+      console.error("Google Calendar API error:", errorData);
+      throw new Error(
+        `Failed to update event: ${errorData.error?.message || "Unknown error"}`
+      );
+    }
+
+    const updatedEvent = await updateResponse.json();
     return NextResponse.json(updatedEvent, { status: 200 });
   } catch (error) {
     return NextResponse.json(
@@ -64,7 +107,10 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { eventId: string } }) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { eventId: string } }
+) {
   console.log("DELETE Called");
   const session = await getServerSession(authOptions);
   const { eventId } = params;

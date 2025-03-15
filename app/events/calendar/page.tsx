@@ -90,7 +90,7 @@ export default function GoogleCalendar() {
           }}
         />
         {
-          true ? (<div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 z-50">
+          popUp ? (<div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 z-50">
             <Card className="w-full max-w-md shadow-xl animate-fade-in text-center">
               <CardHeader>
                 <CardTitle className="text-xl sm:text-2xl font-bold">Session Expired</CardTitle>
