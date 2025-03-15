@@ -106,6 +106,3 @@ async function refreshAccessToken(token: CustomJWT) {
     return { ...token, error: "RefreshAccessTokenError" };
   }
 }
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
