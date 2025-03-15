@@ -32,12 +32,15 @@ export async function POST(req: Request) {
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
 
-      const tempDir = path.join(process.cwd(), "tmp");
-      await fs.promises.mkdir(tempDir, { recursive: true });
-      const tempFilePath = path.join(tempDir, file.name);
-      await writeFile(tempFilePath, buffer);
+      // Use Vercel's writable /tmp directory
+      const tempFilePath = `/tmp/${file.name}`;
+
+      await writeFile(tempFilePath, buffer); // Save file in /tmp
 
       imgLink = await uploadToCloudinary(tempFilePath, "Gallery_BSC");
+
+      // Optionally: Delete the file after upload (since it's a temp file)
+      fs.unlinkSync(tempFilePath);
     }
 
     console.log("imgLink", imgLink);
@@ -52,7 +55,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error creating gallery:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to create galleries" },
+      { success: false, error: `${error}` },
       { status: 500 }
     );
   }
