@@ -16,46 +16,6 @@ type gallery = {
   images: string;
 };
 
-export async function PUT(
-  req: Request,
-  context: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id: galleryId } = await context.params;
-
-    const formData = await req.formData();
-    let imgLink: string | null = null;
-
-    const updateData: gallery = { images: "" };
-
-    if (formData.has("images")) {
-      const file = formData.get("images") as File;
-      const buffer = Buffer.from(await file.arrayBuffer());
-
-      const tempDir = path.join(process.cwd(), "tmp");
-      await fs.promises.mkdir(tempDir, { recursive: true });
-      const tempFilePath = path.join(tempDir, file.name);
-      await writeFile(tempFilePath, buffer);
-
-      imgLink = await uploadToCloudinary(tempFilePath, "Gallery_BSC");
-      updateData.images = imgLink;
-    }
-
-    const updatedGallery = await prisma.gallery.update({
-      where: { id: galleryId },
-      data: updateData,
-    });
-
-    return NextResponse.json({ success: true, gallery: updatedGallery });
-  } catch (error) {
-    console.error("Error updating event:", error);
-    return NextResponse.json(
-      { success: false, error: `Failed to update gallery due to ${error}` },
-      { status: 500 }
-    );
-  }
-}
-
 export async function DELETE(
   req: Request,
   context: { params: Promise<{ id: string }> }
