@@ -79,7 +79,7 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="https://www.freeprivacypolicy.com/live/645f497e-29f1-453e-ba54-dc0f5c005ca3" className="text-sm hover:text-[#FFC900] transition-all duration-300">
+                                <Link href="/privacy-policy" className="text-sm hover:text-[#FFC900] transition-all duration-300">
                                     Privacy Policy
                                 </Link>
                             </li>
