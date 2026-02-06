@@ -2,7 +2,7 @@
 
 > Official coding club platform serving 500+ members. Achieved 180+ monthly organic visitors and ranked #1 on Google for target keywords.
 
-![Coding Club Platform](./assets/codingclub.png)
+![Coding Club Platform](./codingclub.png)
 
 ## 🎯 Impact
 
@@ -52,10 +52,10 @@ Visit `http://localhost:3000` to see the platform.
 
 ## 📧 Evidence
 
-![Analytics Screenshot](./assets/analytical-ss.jfif)
+![Analytics Screenshot](./analytical-ss.jfif)
 Monthly organic traffic reaching 180+ visitors
 
-![Google Ranking](./assets/google-ranking.png)
+![Google Ranking](./proofOfClicks.png)
 Ranked #1 for target keywords
 
 ## 📝 License
