@@ -1,12 +1,12 @@
 # BITS Pilani Coding Club Platform
 
-> Official coding club platform serving 500+ members. Achieved 180+ monthly organic visitors and ranked #1 on Google for target keywords.
+> Official coding club platform serving 500+ members. Achieved + monthly organic visitors and ranked #1 on Google for target keywords.
 
-![Coding Club Platform](./codingclub.png)
+![Coding Club Platform](./pbulic/codingclub.png)
 
 ## 🎯 Impact
-
-- 180+ monthly organic visitors through SEO optimization
+- 458 organic clicks through SEO optimization
+- 50+ monthly organic visitors through SEO optimization
 - Ranked #1 for "[bits coding club]" keywords, outranking institutional sites
 - Cross-college interest: Approached by other institutions (KIT) for implementation
 - Codebase adopted by BITS Pilani for official deployment
@@ -52,8 +52,8 @@ Visit `http://localhost:3000` to see the platform.
 
 ## 📧 Evidence
 
-![Analytics Screenshot](./analytical-ss.jfif)
-Monthly organic traffic reaching 180+ visitors
+![Analytics Screenshot](./public/analytical-ss.jfif)
+Monthly organic traffic reaching 458+ visitors
 
 ![Google Ranking](./proofOfClicks.png)
 Ranked #1 for target keywords
