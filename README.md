@@ -2,7 +2,7 @@
 
 > Official coding club platform serving 500+ members. Achieved + monthly organic visitors and ranked #1 on Google for target keywords.
 
-![Coding Club Platform](./pbulic/codingclub.png)
+![Coding Club Platform](./pbulic/bitscodingclub.png)
 
 ## 🎯 Impact
 - 458 organic clicks through SEO optimization
