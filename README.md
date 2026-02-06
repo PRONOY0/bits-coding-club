@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BITS Pilani Coding Club Platform
 
-## Getting Started
+> Official coding club platform serving 500+ members. Achieved 180+ monthly organic visitors and ranked #1 on Google for target keywords.
 
-First, run the development server:
+![Coding Club Platform](./assets/codingclub.png)
 
-```bash
+## 🎯 Impact
+
+- 180+ monthly organic visitors** through SEO optimization
+- Ranked #1 for "[bits coding club]" keywords, outranking institutional sites
+- Cross-college interest: Approached by other institutions (KIT) for implementation
+- Codebase adopted** by BITS Pilani for official deployment
+
+## ✨ Features
+- Event Management System: Create, edit, and manage coding events with RSVP tracking
+- Admin Dashboard: Comprehensive admin panel for club management
+- Project Showcase: Display student projects with live demos and code links
+- Responsive Design: Mobile-first approach with smooth animations
+
+## 🛠️ Tech Stack
+- Framework: Next.js 15 with TypeScript (App Router)
+- Database: MongoDB
+- Styling: Tailwind CSS
+- Authentication: NextAuth.js
+- Deployment: Vercel
+
+## 📊 SEO Strategy
+Implemented comprehensive SEO optimization:
+- Semantic HTML structure
+- Dynamic meta tags and Open Graph data
+- Optimized images with Next.js Image component
+- Fast page loads (Lighthouse score: 90+)
+- Structured data for events
+
+## 🚀 Getting Started
+\`\`\`bash
+# Clone the repository
+git clone https://github.com/yourusername/bits-coding-club.git
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Add your MongoDB URI and NextAuth secrets
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000` to see the platform.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📧 Evidence
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![Analytics Screenshot](./assets/analytics-180-visitors.png)
+*Monthly organic traffic reaching 180+ visitors*
 
-## Learn More
+![Google Ranking](./assets/google-ranking.png)
+*Ranked #1 for target keywords*
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+MIT License - feel free to use this for your own coding club!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Built with ❤️ for the developer community**
