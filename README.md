@@ -6,10 +6,10 @@
 
 ## 🎯 Impact
 
-- 180+ monthly organic visitors** through SEO optimization
+- 180+ monthly organic visitors through SEO optimization
 - Ranked #1 for "[bits coding club]" keywords, outranking institutional sites
 - Cross-college interest: Approached by other institutions (KIT) for implementation
-- Codebase adopted** by BITS Pilani for official deployment
+- Codebase adopted by BITS Pilani for official deployment
 
 ## ✨ Features
 - Event Management System: Create, edit, and manage coding events with RSVP tracking
@@ -52,16 +52,13 @@ Visit `http://localhost:3000` to see the platform.
 
 ## 📧 Evidence
 
-![Analytics Screenshot](./assets/analytics-180-visitors.png)
-*Monthly organic traffic reaching 180+ visitors*
+![Analytics Screenshot](./assets/analytical-ss.jfif)
+Monthly organic traffic reaching 180+ visitors
 
 ![Google Ranking](./assets/google-ranking.png)
-*Ranked #1 for target keywords*
+Ranked #1 for target keywords
 
 ## 📝 License
-
 MIT License - feel free to use this for your own coding club!
-
 ---
-
-**Built with ❤️ for the developer community**
+Built with ❤️ for the developer community
